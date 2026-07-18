@@ -1,0 +1,87 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Endurance UI/Introduction" />
+
+# Endurance UI
+
+A React + TypeScript component system — **not a sticker pack**. Every primitive is built
+around rigorous API design, accessibility, and documentation. One shared foundation, zero
+design drift.
+
+This Storybook is the living reference for the system: browse a component in the sidebar,
+flip between **Light** and **Dark** with the theme toggle in the toolbar, and open the
+**Docs** tab on any component for usage, do/don't guidance, and accessibility notes.
+
+---
+
+## The four pillars
+
+**WAI-ARIA** — Full keyboard and screen-reader support across every primitive. Interactive
+components are built on Radix, so roles, focus management, and keyboard interactions are
+correct by default.
+
+**Typed APIs** — Strict prop contracts. Variants are modeled as
+[`class-variance-authority`](https://cva.style/) unions, so an invalid `variant` or `size`
+fails at compile time instead of shipping a broken button.
+
+**Storybook** — Every component is documented here with usage, do/don't, and a11y notes —
+the page you're reading now.
+
+**Tested** — Unit and interaction tests, with visual regression on the critical primitives.
+
+---
+
+## Design tokens
+
+Components never hard-code colors. They reference semantic CSS variables defined in
+`src/styles.css`, which flip automatically under the `.dark` class:
+
+| Token                                | Purpose                                       |
+| ------------------------------------ | --------------------------------------------- |
+| `--background` / `--foreground`      | Page surface and body text                    |
+| `--primary` / `--primary-foreground` | Primary actions                               |
+| `--secondary` / `--muted`            | Lower-emphasis surfaces                       |
+| `--accent`                           | Brand highlight (links, stats, active states) |
+| `--destructive`                      | Irreversible / dangerous actions              |
+| `--border` / `--input` / `--ring`    | Edges and focus rings                         |
+
+Because everything is a token, theming is a data change — not a component rewrite.
+
+---
+
+## How variants work
+
+Variants are a typed contract, not a bag of boolean props. For example, `Button`:
+
+```tsx
+const buttonVariants = cva("…base classes…", {
+  variants: {
+    variant: { default: "…", secondary: "…", outline: "…", ghost: "…", link: "…", destructive: "…" },
+    size: { default: "…", sm: "…", lg: "…", icon: "…" },
+  },
+  defaultVariants: { variant: "default", size: "default" },
+});
+
+// ✅ typed — autocompletes and compiles
+<Button variant="secondary" size="lg" />
+
+// ❌ compile error — "huge" is not a size
+<Button size="huge" />
+```
+
+The variant map is the single source of truth for every visual state, which is what keeps
+three teams from reinventing the same button six different ways.
+
+---
+
+## Accessibility baseline
+
+Every component in this library is expected to meet the same bar:
+
+- Reachable and operable by **keyboard alone**.
+- A visible **focus ring** (`--ring`) on every interactive element.
+- Form controls paired with a real `<Label htmlFor>` — placeholders are never labels.
+- Status communicated by **more than color** (text or `aria-*`, not hue alone).
+
+The **Accessibility** tab (a11y addon) runs automated axe checks on each story so
+regressions surface here before they reach production.
