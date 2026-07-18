@@ -1,7 +1,6 @@
 import type { DesignSystemPillar } from "./design-system.types";
 
-// Where the Endurance UI Storybook lives. Locally it runs on port 6006
-// (`npm run storybook`); swap this for the deployed URL once published.
+
 export const STORYBOOK_URL = "http://localhost:6006";
 
 // Deep link to the Introduction MDX page (the "Documentation" entry point).
