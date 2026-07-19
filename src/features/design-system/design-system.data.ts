@@ -1,9 +1,9 @@
 import type { DesignSystemPillar } from "./design-system.types";
 
 
-export const STORYBOOK_URL = "http://localhost:6006";
+export const STORYBOOK_URL = "https://endurancemathewstorybook.netlify.app/";
 
-// Deep link to the Introduction MDX page (the "Documentation" entry point).
+
 export const STORYBOOK_DOCS_URL = `${STORYBOOK_URL}/?path=/docs/endurance-ui-introduction--docs`;
 
 export const designSystemPillars: DesignSystemPillar[] = [
