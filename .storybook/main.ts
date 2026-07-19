@@ -7,7 +7,14 @@ const config: StorybookConfig = {
   addons: ["@storybook/addon-essentials", "@storybook/addon-a11y"],
   framework: {
     name: "@storybook/react-vite",
-    options: {},
+    options: {
+      // Force Storybook to use a minimal Vite config instead of the app's
+      // root vite.config.ts (TanStack Start + nitro), which would redirect the
+      // build into a client/ folder and skip iframe.html.
+      builder: {
+        viteConfigPath: ".storybook/vite.config.ts",
+      },
+    },
   },
   core: {
     disableTelemetry: true,

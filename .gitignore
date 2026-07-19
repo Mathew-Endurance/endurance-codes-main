@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# Storybook build output
+storybook-static
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
