@@ -46,6 +46,23 @@
 }
 
 :root {
+  /* Light palette (default) */
+  --background: oklch(0.99 0.002 270); /* near-white */
+  --foreground: oklch(0.17 0.005 270); /* near-black text */
+  --surface: oklch(0.98 0.003 270); /* light card */
+  --surface-elevated: oklch(0.95 0.004 270);
+  --border: oklch(0 0 0 / 0.1);
+  --border-strong: oklch(0 0 0 / 0.18);
+  --muted: oklch(0.95 0.004 270);
+  --muted-foreground: oklch(0.45 0.01 270); /* mid gray */
+  --accent: oklch(0.55 0.2 256); /* deeper blue for light bg contrast */
+  --accent-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.17 0 0); /* dark pill on light */
+  --primary-foreground: oklch(0.98 0 0);
+  --radius: 0.5rem;
+}
+
+.dark {
   /* Dark engineering studio palette */
   --background: oklch(0.14 0.005 270); /* #050505-ish near-black */
   --foreground: oklch(0.92 0.005 270); /* #E5E7EB */
@@ -59,7 +76,6 @@
   --accent-foreground: oklch(0.98 0 0);
   --primary: oklch(0.98 0 0); /* white pill */
   --primary-foreground: oklch(0.14 0 0);
-  --radius: 0.5rem;
 }
 
 @layer base {
@@ -68,6 +84,9 @@
   }
   html {
     background-color: var(--color-background);
+    color-scheme: light;
+  }
+  html.dark {
     color-scheme: dark;
   }
   body {
