@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Outside a Lovable build nitro is skipped by default, which leaves no
+  // deployable server bundle. We self-host on Netlify, so force it on and pin
+  // the target instead of relying on auto-detection.
+  nitro: { preset: "netlify" },
 });

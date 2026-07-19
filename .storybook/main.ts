@@ -1,12 +1,12 @@
 import { resolve } from "node:path";
-import type { StorybookConfig } from "@storybook/react-vite";
+import type { StorybookConfig } from "@storybook/tanstack-react";
 import tailwindcss from "@tailwindcss/vite";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(ts|tsx)"],
-  addons: ["@storybook/addon-essentials", "@storybook/addon-a11y"],
+  addons: ["@storybook/addon-a11y", "@storybook/addon-mcp", "@storybook/addon-docs"],
   framework: {
-    name: "@storybook/react-vite",
+    name: "@storybook/tanstack-react",
     options: {
       // Force Storybook to use a minimal Vite config instead of the app's
       // root vite.config.ts (TanStack Start + nitro), which would redirect the

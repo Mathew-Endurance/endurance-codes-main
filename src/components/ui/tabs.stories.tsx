@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 

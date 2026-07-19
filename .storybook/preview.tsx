@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import type { Preview } from "@storybook/react";
-import { DocsContainer, type DocsContainerProps } from "@storybook/blocks";
-import { addons } from "@storybook/preview-api";
-import { themes } from "@storybook/theming";
+import type { Preview } from "@storybook/tanstack-react";
+import { DocsContainer, type DocsContainerProps } from "@storybook/addon-docs/blocks";
+import { addons } from "storybook/preview-api";
+import { themes } from "storybook/theming";
 import { GLOBALS_UPDATED } from "storybook/internal/core-events";
 
 import "../src/styles.css";
@@ -53,7 +53,7 @@ const preview: Preview = {
     layout: "centered",
     // The app's design tokens paint the real background; Storybook's own
     // backgrounds addon would fight them, so we disable it and rely on `.dark`.
-    backgrounds: { disable: true },
+    backgrounds: { disabled: true },
     docs: {
       container: ThemedDocsContainer,
     },
