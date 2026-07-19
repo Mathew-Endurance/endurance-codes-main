@@ -1,4 +1,5 @@
 import { navLinks } from "./navigation.data";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function NavBar() {
   return (
@@ -7,12 +8,19 @@ export function NavBar() {
         <a href="#top" className="font-mono text-sm font-medium tracking-tighter">
           ENDURANCE_MATHEW
         </a>
-        <div className="hidden items-center gap-8 text-xs font-medium uppercase tracking-widest text-muted-foreground md:flex">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} className="transition-colors hover:text-foreground">
-              {link.label}
-            </a>
-          ))}
+        <div className="flex items-center gap-8">
+          <div className="hidden items-center gap-8 text-xs font-medium uppercase tracking-widest text-muted-foreground md:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <ThemeToggle />
         </div>
       </div>
     </nav>
