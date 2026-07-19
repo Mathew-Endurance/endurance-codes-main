@@ -1,3 +1,18 @@
+# Builds the portfolio (the main project).
+#
+# Storybook deploys as a SEPARATE Netlify site from this same repo. Netlify's
+# file-based config overrides per-site UI settings, so this file can only
+# describe one of the two builds -- the Storybook site sets its own build
+# command and publish directory in the Netlify UI:
+#   Build command:     npm run build-storybook
+#   Publish directory: storybook-static
+
 [build]
-  command = "npm install --legacy-peer-deps && npm run build-storybook"
-  publish = "storybook-static"
+  # Vite 8 requires ^20.19.0 || >=22.12.0.
+  environment = { NODE_VERSION = "22" }
+
+  command = "npm install && npm run build"
+
+  # `npm run build` emits static assets here and the SSR handler into
+  # .netlify/functions-internal, which Netlify picks up automatically.
+  publish = "dist"
