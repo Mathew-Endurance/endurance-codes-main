@@ -257,7 +257,7 @@ export const projects: Project[] = [
     ],
     links: [
       { label: "Live Demo", href: "https://aicryptodashboard.netlify.app/" },
-      { label: "GitHub", href: "https://github.com/Mathew-Endurance/ai_streaming" },
+      // { label: "GitHub", href: "https://github.com/Mathew-Endurance/ai_streaming" },
     ],
     timeline: [
       {

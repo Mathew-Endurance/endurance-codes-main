@@ -1,5 +1,6 @@
 import { MaskedText } from "@/components/motion/MaskedText";
 import { RevealItem, StaggerGroup } from "@/components/motion/Reveal";
+import { riseIn } from "@/lib/motion";
 import { skillGroups } from "./skills.data";
 
 export function SkillsSection() {
@@ -19,7 +20,7 @@ export function SkillsSection() {
           className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-3"
         >
           {skillGroups.map((g) => (
-            <RevealItem key={g.title} className="bg-background p-8">
+            <RevealItem key={g.title} variants={riseIn} className="bg-background p-8">
               <div className="mb-5 flex items-center gap-2">
                 <g.icon className="h-3.5 w-3.5 text-accent" />
                 <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">

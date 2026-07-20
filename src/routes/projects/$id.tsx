@@ -1,6 +1,13 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight, Code2 } from "lucide-react";
+import { CountUp } from "@/components/motion/CountUp";
+import { MaskedText } from "@/components/motion/MaskedText";
 import { PageTransition } from "@/components/motion/PageTransition";
+import { Reveal, RevealItem, StaggerGroup } from "@/components/motion/Reveal";
+import { ScrollProgress } from "@/components/motion/ScrollProgress";
+import { TiltCard } from "@/components/motion/TiltCard";
+import { TimelinePhase, TimelineTrack } from "@/components/motion/TimelineTrack";
+import { riseIn } from "@/lib/motion";
 import { getProjectById, ProjectGallery } from "@/features/projects";
 import { notes } from "@/features/notes";
 
@@ -65,35 +72,41 @@ function CaseStudyPage() {
               {project.tag}
             </span>
           </div>
+          <ScrollProgress />
         </div>
 
         {/* Hero */}
         <section className="border-b border-border px-6 py-24 md:py-32">
           <div className="mx-auto max-w-4xl">
-            <div className="mb-8 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <Reveal className="mb-8 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               <span className="text-accent">{project.index}</span>
               <span className="h-px flex-1 bg-border" />
               <span>{project.tag}</span>
-            </div>
+            </Reveal>
             <h1 className="mb-8 text-5xl font-bold leading-tight tracking-tight md:text-6xl">
-              {project.name}
+              <MaskedText delay={0.1}>{project.name}</MaskedText>
             </h1>
-            <p className="mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            <Reveal
+              as="p"
+              delay={0.25}
+              className="mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground"
+            >
               {project.overview}
-            </p>
-            <div className="flex flex-wrap gap-3">
+            </Reveal>
+            <StaggerGroup each={0.08} delay={0.35} className="flex flex-wrap gap-3">
               {project.links.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-                >
-                  {link.label} <ArrowUpRight className="h-3.5 w-3.5" />
-                </a>
+                <RevealItem key={link.label}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                  >
+                    {link.label} <ArrowUpRight className="h-3.5 w-3.5" />
+                  </a>
+                </RevealItem>
               ))}
-            </div>
+            </StaggerGroup>
           </div>
         </section>
 
@@ -101,11 +114,15 @@ function CaseStudyPage() {
         <section className="border-b border-border px-6 py-12">
           <div className="mx-auto max-w-6xl">
             {project.gallery && project.gallery.length > 0 ? (
-              <ProjectGallery images={project.gallery} href={project.liveUrl} />
+              <Reveal>
+                <ProjectGallery images={project.gallery} href={project.liveUrl} />
+              </Reveal>
             ) : (
-              <div className="overflow-hidden rounded-lg border border-border-strong bg-surface shadow-2xl">
-                <img src={project.image} alt={project.imageAlt} className="w-full object-cover" />
-              </div>
+              <Reveal>
+                <TiltCard className="overflow-hidden rounded-lg border border-border-strong bg-surface shadow-2xl">
+                  <img src={project.image} alt={project.imageAlt} className="w-full object-cover" />
+                </TiltCard>
+              </Reveal>
             )}
           </div>
         </section>
@@ -113,12 +130,20 @@ function CaseStudyPage() {
         {/* Core Details */}
         <section className="border-b border-border px-6 py-24">
           <div className="mx-auto max-w-6xl">
-            <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-              <DetailCard label="Role">{project.role}</DetailCard>
-              <DetailCard label="Problem">{project.problem}</DetailCard>
-              <DetailCard label="Solution">{project.decisions}</DetailCard>
-              <DetailCard label="Impact">{project.impact}</DetailCard>
-            </div>
+            <StaggerGroup each={0.12} className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+              <RevealItem variants={riseIn}>
+                <DetailCard label="Role">{project.role}</DetailCard>
+              </RevealItem>
+              <RevealItem variants={riseIn}>
+                <DetailCard label="Problem">{project.problem}</DetailCard>
+              </RevealItem>
+              <RevealItem variants={riseIn}>
+                <DetailCard label="Solution">{project.decisions}</DetailCard>
+              </RevealItem>
+              <RevealItem variants={riseIn}>
+                <DetailCard label="Impact">{project.impact}</DetailCard>
+              </RevealItem>
+            </StaggerGroup>
           </div>
         </section>
 
@@ -126,20 +151,25 @@ function CaseStudyPage() {
         {project.metrics && project.metrics.length > 0 && (
           <section className="border-b border-border bg-surface/30 px-6 py-24">
             <div className="mx-auto max-w-6xl">
-              <h2 className="mb-12 text-3xl font-bold tracking-tight">Results & Metrics</h2>
-              <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-4">
+              <h2 className="mb-12 text-3xl font-bold tracking-tight">
+                <MaskedText>Results &amp; Metrics</MaskedText>
+              </h2>
+              <StaggerGroup
+                each={0.14}
+                className="grid gap-px overflow-hidden rounded-lg border border-border bg-border md:grid-cols-2 lg:grid-cols-4"
+              >
                 {project.metrics.map((metric) => (
-                  <div key={metric.label} className="bg-background p-8">
-                    <div className="text-4xl font-bold text-accent">{metric.value}</div>
+                  <RevealItem key={metric.label} variants={riseIn} className="bg-background p-8">
+                    <CountUp value={metric.value} className="text-4xl font-bold text-accent" />
                     <div className="mt-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
                       {metric.label}
                     </div>
                     <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                       {metric.context}
                     </p>
-                  </div>
+                  </RevealItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </section>
         )}
@@ -148,11 +178,12 @@ function CaseStudyPage() {
         {project.timeline && project.timeline.length > 0 && (
           <section className="border-b border-border px-6 py-24">
             <div className="mx-auto max-w-6xl">
-              <h2 className="mb-12 text-3xl font-bold tracking-tight">How We Built It</h2>
-              <div className="space-y-8">
+              <h2 className="mb-12 text-3xl font-bold tracking-tight">
+                <MaskedText>How We Built It</MaskedText>
+              </h2>
+              <TimelineTrack className="space-y-8">
                 {project.timeline.map((phase, index) => (
-                  <div key={phase.phase} className="relative border-l-2 border-accent pl-8 pb-8">
-                    <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-4 border-background bg-accent" />
+                  <TimelinePhase key={phase.phase}>
                     <div className="mb-2 font-mono text-xs uppercase tracking-widest text-accent">
                       Phase {index + 1}
                     </div>
@@ -175,9 +206,9 @@ function CaseStudyPage() {
                         ))}
                       </ul>
                     )}
-                  </div>
+                  </TimelinePhase>
                 ))}
-              </div>
+              </TimelineTrack>
             </div>
           </section>
         )}
@@ -186,10 +217,12 @@ function CaseStudyPage() {
         {project.codeSnippets && project.codeSnippets.length > 0 && (
           <section className="border-b border-border bg-surface/30 px-6 py-24">
             <div className="mx-auto max-w-6xl">
-              <h2 className="mb-12 text-3xl font-bold tracking-tight">Technical Deep Dive</h2>
+              <h2 className="mb-12 text-3xl font-bold tracking-tight">
+                <MaskedText>Technical Deep Dive</MaskedText>
+              </h2>
               <div className="space-y-16">
                 {project.codeSnippets.map((snippet) => (
-                  <div key={snippet.title}>
+                  <Reveal key={snippet.title}>
                     <div className="mb-6">
                       <h3 className="mb-2 flex items-center gap-2 text-xl font-bold">
                         <Code2 className="h-5 w-5 text-accent" />
@@ -202,7 +235,7 @@ function CaseStudyPage() {
                         <code>{snippet.code}</code>
                       </pre>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -213,14 +246,16 @@ function CaseStudyPage() {
         {project.lessonsLearned && project.lessonsLearned.length > 0 && (
           <section className="border-b border-border px-6 py-24">
             <div className="mx-auto max-w-6xl">
-              <h2 className="mb-12 text-3xl font-bold tracking-tight">Lessons Learned</h2>
-              <div className="space-y-6">
+              <h2 className="mb-12 text-3xl font-bold tracking-tight">
+                <MaskedText>Lessons Learned</MaskedText>
+              </h2>
+              <StaggerGroup each={0.12} className="space-y-6">
                 {project.lessonsLearned.map((lesson, index) => (
-                  <div key={index} className="border-l-2 border-accent pl-6 py-4">
+                  <RevealItem key={index} className="border-l-2 border-accent pl-6 py-4">
                     <p className="text-base leading-relaxed text-muted-foreground">{lesson}</p>
-                  </div>
+                  </RevealItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </section>
         )}
@@ -229,28 +264,35 @@ function CaseStudyPage() {
         {relatedNotes.length > 0 && (
           <section className="border-b border-border bg-surface/30 px-6 py-24">
             <div className="mx-auto max-w-6xl">
-              <h2 className="mb-12 text-3xl font-bold tracking-tight">Related Reading</h2>
-              <div className="grid gap-4 md:grid-cols-2">
+              <h2 className="mb-12 text-3xl font-bold tracking-tight">
+                <MaskedText>Related Reading</MaskedText>
+              </h2>
+              <StaggerGroup each={0.12} className="grid gap-4 md:grid-cols-2">
                 {relatedNotes.map((note) => (
-                  <a
+                  <RevealItem
                     key={note.title}
-                    href={note.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block rounded border border-border bg-background p-6 transition-colors hover:bg-surface/50"
+                    variants={riseIn}
+                    className="group block rounded border border-border bg-background transition-colors hover:bg-surface/50"
                   >
-                    <div className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                      <span>{note.date}</span>
-                      <span className="h-px flex-1 bg-border" />
-                      <span className="text-accent">{note.tag}</span>
-                    </div>
-                    <h3 className="mb-2 text-lg font-semibold transition-colors group-hover:text-accent">
-                      {note.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{note.blurb}</p>
-                  </a>
+                    <a
+                      href={note.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full rounded border border-transparent p-6"
+                    >
+                      <div className="mb-3 flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                        <span>{note.date}</span>
+                        <span className="h-px flex-1 bg-border" />
+                        <span className="text-accent">{note.tag}</span>
+                      </div>
+                      <h3 className="mb-2 text-lg font-semibold transition-colors group-hover:text-accent">
+                        {note.title}
+                      </h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{note.blurb}</p>
+                    </a>
+                  </RevealItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
           </section>
         )}

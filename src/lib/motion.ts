@@ -10,6 +10,7 @@ export const duration = {
   base: 0.5,
   slow: 0.8,
   reveal: 1.1,
+  long: 1.6,
 } as const;
 
 /** House easing — a soft decelerating curve used for nearly everything. */
@@ -18,12 +19,50 @@ export const ease = [0.16, 1, 0.3, 1] as const;
 /** Snappier curve for press/hover feedback where the slow tail feels laggy. */
 export const easeOut = [0.33, 1, 0.68, 1] as const;
 
+/**
+ * The workhorse entrance. Travels far enough to read as motion rather than a
+ * flicker, and blurs on the way in so the arrival feels like it settles.
+ */
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 64, scale: 0.97, filter: "blur(6px)" },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: duration.slow, ease },
+    scale: 1,
+    filter: "blur(0px)",
+    transition: { duration: duration.reveal, ease },
+  },
+};
+
+/** Enters from the side. Used to give paired columns opposing directions. */
+export const fadeInLeft: Variants = {
+  hidden: { opacity: 0, x: -56, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: duration.reveal, ease },
+  },
+};
+
+export const fadeInRight: Variants = {
+  hidden: { opacity: 0, x: 56, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    x: 0,
+    filter: "blur(0px)",
+    transition: { duration: duration.reveal, ease },
+  },
+};
+
+/** Cards and tiles: rise with a slight 3D tip, so grids feel dimensional. */
+export const riseIn: Variants = {
+  hidden: { opacity: 0, y: 72, rotateX: -12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: duration.reveal, ease },
   },
 };
 
@@ -57,12 +96,12 @@ export const maskReveal: Variants = {
 
 /** Word-by-word hero headline. */
 export const wordReveal: Variants = {
-  hidden: { opacity: 0, y: "0.6em", rotateX: -40 },
+  hidden: { opacity: 0, y: "1.05em", rotateX: -75 },
   visible: {
     opacity: 1,
     y: "0em",
     rotateX: 0,
-    transition: { duration: duration.slow, ease },
+    transition: { duration: duration.reveal, ease },
   },
 };
 
