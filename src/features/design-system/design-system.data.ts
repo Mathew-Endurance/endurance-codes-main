@@ -1,8 +1,6 @@
 import type { DesignSystemPillar } from "./design-system.types";
 
-
 export const STORYBOOK_URL = "https://endurancemathewstorybook.netlify.app/";
-
 
 export const STORYBOOK_DOCS_URL = `${STORYBOOK_URL}/?path=/docs/endurance-ui-introduction--docs`;
 

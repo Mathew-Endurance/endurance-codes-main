@@ -226,11 +226,11 @@ export const projects: Project[] = [
         src: aiDashboard,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },
-        {
+      {
         src: aiMarket,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },
-          {
+      {
         src: projectTrading,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },
@@ -257,7 +257,7 @@ export const projects: Project[] = [
     ],
     links: [
       { label: "Live Demo", href: "https://aicryptodashboard.netlify.app/" },
-      { label: "GitHub", href: "https://github.com/Mathew-Endurance/ai_streaming" },
+      // { label: "GitHub", href: "https://github.com/Mathew-Endurance/ai_streaming" },
     ],
     timeline: [
       {

@@ -1,4 +1,6 @@
 import { CalendarDays, FileDown } from "lucide-react";
+import { MaskedText } from "@/components/motion/MaskedText";
+import { RevealItem, StaggerGroup } from "@/components/motion/Reveal";
 import { experienceRoles } from "./experience.data";
 import resumePdf from "@/assets/Endurance-Mathew-CV.pdf";
 
@@ -7,12 +9,13 @@ export function ExperienceSection() {
     <section id="experience" className="border-t border-border px-6 py-24 md:py-32">
       <div className="mx-auto max-w-5xl">
         <h2 className="mb-16 font-mono text-xs uppercase tracking-widest text-accent">
-          Experience Timeline
+          <MaskedText>Experience Timeline</MaskedText>
         </h2>
-        <ol className="space-y-12">
+        <StaggerGroup as="ol" each={0.12} className="space-y-12">
           {experienceRoles.map((r) => (
-            <li
+            <RevealItem
               key={r.title + r.company}
+              as="li"
               className="grid gap-4 border-t border-border pt-8 md:grid-cols-[220px_1fr] "
             >
               <div className="font-mono text-xs text-muted-foreground">{r.period} </div>
@@ -26,9 +29,9 @@ export function ExperienceSection() {
                   {r.body}
                 </p>
               </div>
-            </li>
+            </RevealItem>
           ))}
-        </ol>
+        </StaggerGroup>
         <div className="mt-10 flex flex-wrap gap-4">
           <a
             href="https://calendly.com/endurancemurray/30min"
