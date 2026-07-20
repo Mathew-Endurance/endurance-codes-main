@@ -226,11 +226,11 @@ export const projects: Project[] = [
         src: aiDashboard,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },
-        {
+      {
         src: aiMarket,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },
-          {
+      {
         src: projectTrading,
         alt: "AI crypto trading dashboard with live market data and streaming AI insights",
       },

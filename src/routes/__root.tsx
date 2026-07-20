@@ -137,6 +137,14 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/*
+          Entrance animations render their initial state (opacity:0) into the
+          server HTML and rely on JS to reveal it. Without this, a visitor with
+          JS blocked would get a near-blank page.
+        */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         {children}
         <Scripts />
       </body>

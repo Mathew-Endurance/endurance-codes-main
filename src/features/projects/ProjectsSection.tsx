@@ -1,3 +1,4 @@
+import { MaskedText } from "@/components/motion/MaskedText";
 import { projects } from "./projects.data";
 import { ProjectCase } from "./ProjectCase";
 
@@ -7,10 +8,12 @@ export function ProjectsSection() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-20">
           <h2 className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">
-            Selected Case Studies
+            <MaskedText>Selected Case Studies</MaskedText>
           </h2>
           <p className="max-w-2xl text-3xl font-bold tracking-tight">
-            Engineering high-performance interfaces for production.
+            <MaskedText delay={0.08}>
+              Engineering high-performance interfaces for production.
+            </MaskedText>
           </p>
         </div>
         <div className="space-y-40">

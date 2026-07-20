@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+
+import { MaskedText } from "@/components/motion/MaskedText";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { duration, ease } from "@/lib/motion";
 import { notes } from "./notes.data";
 
 const PAGE_SIZE = 3;
@@ -7,6 +12,7 @@ const PAGE_SIZE = 3;
 export function NotesSection() {
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [loading, setLoading] = useState(false);
+  const reduced = useReducedMotion();
 
   const shown = notes.slice(0, visible);
   const remaining = notes.length - visible;
@@ -25,19 +31,31 @@ export function NotesSection() {
         <div className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="mb-4 font-mono text-xs uppercase tracking-widest text-accent">
-              Engineering Notes
+              <MaskedText>Engineering Notes</MaskedText>
             </h2>
-            <p className="text-3xl font-bold tracking-tight">Thinking in systems.</p>
+            <p className="text-3xl font-bold tracking-tight">
+              <MaskedText delay={0.08}>Thinking in systems.</MaskedText>
+            </p>
           </div>
           {/* <a href="#" className="font-mono text-xs text-muted-foreground hover:text-foreground">
             VIEW ALL ARTICLES →
           </a> */}
         </div>
         <div className="grid gap-px overflow-hidden border border-border bg-border">
-          {shown.map((p) => (
-            <a
+          {shown.map((p, i) => (
+            <motion.a
               key={p.title}
               href={p.link}
+              // Newly loaded notes animate in; the initial batch is staggered
+              // by its index so the section does not pop in all at once.
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={
+                reduced
+                  ? { duration: 0.01 }
+                  : { duration: duration.base, ease, delay: (i % PAGE_SIZE) * 0.08 }
+              }
               className="group block bg-background p-8 transition-colors hover:bg-surface/40 cursor-pointer"
               target="_blank"
               rel="noopener noreferrer"
@@ -51,26 +69,34 @@ export function NotesSection() {
                 {p.title}
               </h3>
               <p className="max-w-2xl text-sm text-muted-foreground">{p.blurb}</p>
-            </a>
+            </motion.a>
           ))}
-          {loading &&
-            Array.from({ length: Math.min(PAGE_SIZE, remaining) }).map((_, i) => (
-              <div key={`skeleton-${i}`} className="bg-background p-8" aria-hidden="true">
-                <div className="mb-3 flex items-center gap-4">
-                  <span className="h-2 w-28 animate-pulse rounded-sm bg-border" />
-                  <span className="h-px flex-1 bg-border" />
-                  <span className="h-2 w-16 animate-pulse rounded-sm bg-border" />
-                </div>
-                <div className="mb-4 h-5 w-2/3 animate-pulse rounded-sm bg-border" />
-                <div className="mb-2 h-3 w-full max-w-2xl animate-pulse rounded-sm bg-border" />
-                <div className="h-3 w-1/2 max-w-2xl animate-pulse rounded-sm bg-border" />
-              </div>
-            ))}
+          <AnimatePresence>
+            {loading &&
+              Array.from({ length: Math.min(PAGE_SIZE, remaining) }).map((_, i) => (
+                <motion.div
+                  key={`skeleton-${i}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: reduced ? 0.01 : 0.2 }}
+                  className="bg-background p-8"
+                  aria-hidden="true"
+                >
+                  <div className="mb-3 flex items-center gap-4">
+                    <span className="h-2 w-28 animate-pulse rounded-sm bg-border" />
+                    <span className="h-px flex-1 bg-border" />
+                    <span className="h-2 w-16 animate-pulse rounded-sm bg-border" />
+                  </div>
+                  <div className="mb-4 h-5 w-2/3 animate-pulse rounded-sm bg-border" />
+                  <div className="mb-2 h-3 w-full max-w-2xl animate-pulse rounded-sm bg-border" />
+                  <div className="h-3 w-1/2 max-w-2xl animate-pulse rounded-sm bg-border" />
+                </motion.div>
+              ))}
+          </AnimatePresence>
         </div>
         <div aria-live="polite" className="sr-only">
-          {loading
-            ? "Loading more notes"
-            : `Showing ${shown.length} of ${notes.length} notes`}
+          {loading ? "Loading more notes" : `Showing ${shown.length} of ${notes.length} notes`}
         </div>
         {remaining > 0 && (
           <div className="mt-10 flex justify-center">
